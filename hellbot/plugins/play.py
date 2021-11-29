@@ -75,7 +75,7 @@ async def play(_, message: Message):
                 not path.isfile(path.join("downloads", file_name))
             ) else file_name
         )
-    elif len(qry) > 1:
+    elif not audio:
         if qry[1].startswith("https://youtu"):
             await response.edit("<b><i>Youtube Url Detected!! Processing...</b></i>")
             url = qry[1]
