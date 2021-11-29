@@ -16,7 +16,7 @@ async def close(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbback"))
 async def cbback(_, query: CallbackQuery):
-    await query.edit_message_caption(
+    await query.edit_message_text(
         caption="**Hêllẞø† Control Panel :**",
         reply_markup=InlineKeyboardMarkup(
             [
