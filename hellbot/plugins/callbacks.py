@@ -153,7 +153,7 @@ async def cbcmds(client: Client, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbvc"))
 async def cdvc(_, query: CallbackQuery):
-    await query.edit_message.text(
+    await query.edit_message_text(
         text=f"""<b><i>Voice Chat Command:</b></i>
 
 
