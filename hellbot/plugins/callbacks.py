@@ -93,7 +93,7 @@ __**Hello!! This is a voice chat music player bot. You can listen to any music u
 
 @Client.on_callback_query(filters.regex("cbhelpmenu"))
 async def cbhelpmenu(_, query: CallbackQuery):
-    await query.edit_message_caption(
+    await query.edit_message_text(
         caption=f"""<b><i>Hello there {query.message.from_user.mention} 😉️!</b></i>
 <i>Here is the help menu and some basic guide:</i>""",
         reply_markup=InlineKeyboardMarkup([InlineKeyboardButton("How to use ❓", callback_data="cbhowtouse")])
@@ -101,7 +101,7 @@ async def cbhelpmenu(_, query: CallbackQuery):
 
 
 @Client.on_callback_query(filters.regex("cbhowtouse"))
-async def cbhowtouse(_, query: CallbackQuery):
+async def cbhowtouse(client: Client, message: Message, query: CallbackQuery):
     await client.send_message(
         query.chat.id,
         f"""<b><i>How to use me?</b></i>
@@ -123,7 +123,7 @@ async def cbhowtouse(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbgetlyrics"))
 async def cbgetlyrics(_, query: CallbackQuery):
-    await query.edit_message_caption(
+    await query.edit_message_text(
         caption=f"""<b><i>🎶 Lyrics Module:</b></i>
 
 <b>Usage:</b> <code>Gets you the lyrics of given song.</code>
@@ -144,7 +144,7 @@ async def cbgetlyrics(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbytsearch"))
 async def cbytsearch(_, query: CallbackQuery):
-    await query.edit_message_caption(
+    await query.edit_message_text(
         caption=f"""<b><i>Youtube Module:</b></i>
 
 <b>Usage:</b> <code>Searches youtube video in inline mode or via command.</code>
@@ -169,7 +169,7 @@ async def cbytsearch(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbmusicdown"))
 async def cbmusicdown(_, query: CallbackQuery):
-    await query.edit_message_caption(
+    await query.edit_message_text(
         caption=f"""<b><i>Song Download Module:</b></i>
 
 <b>Usage:</b> <code>Downloads requested song from YouTube, Deezer, Saavn.</code>
@@ -197,7 +197,7 @@ async def cbmusicdown(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbytviddown"))
 async def cbytviddown(_, query: CallbackQuery):
-    await query.edit_message_caption(
+    await query.edit_message_text(
         caption=f"""<b><i>Youtube Video Module:</b></i>
 
 <b>Usage:</b> <code>Downloads the video from youtube.</code>
@@ -218,7 +218,7 @@ async def cbytviddown(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbdelcmds"))
 async def cbdelcmds(_, query: CallbackQuery):
-    await query.edit_message_caption(
+    await query.edit_message_text(
         caption=f"""<b><i>Clean Commands:</i></b>
 
 <b>Usage:</b> <code>Deletes the command in your group to avoid spam in your group with bluetexts.</code>
@@ -238,7 +238,7 @@ async def cbdelcmds(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("quotly"))
 async def quotly(_, query: CallbackQuery):
-    await query.edit_message_caption(
+    await query.edit_message_text(
         caption=f"""<b><i>Quotes Module:</b></i>
 
 <b>Usage:</b> <code>Quotes the given message to sticker.</code>
