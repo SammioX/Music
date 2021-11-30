@@ -269,7 +269,7 @@ async def search(client, message):
         results = json.loads(YoutubeSearch(query, max_results=5).to_json())
     except KeyError:
         return await m.edit("Unable to find relevant search queries...")
-    output = f"<b><i><u>Search Query:</b></i></u>\n<code>{query}<code>\n\n<b><i>Results:</b></i>\n\n"
+    output = f"<b><i><u>Search Query:</b></i></u> <code>{query}</code>\n\n<b><i>Results:</b></i>\n\n"
     for i in results["videos"]:
         url = f"https://www.youtube.com{i['url_suffix']}"
         output += (f"• <a href='{url}'>{i['title']}</a>\n\n")
