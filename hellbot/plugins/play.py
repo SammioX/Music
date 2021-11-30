@@ -79,7 +79,7 @@ async def play(_, message: Message):
                 not path.isfile(path.join("downloads", file_name))
             ) else file_name
         )
-    elif:
+    else:
         await response.edit(f"<b><i>Searching “ {qry[1]} ” on Youtube...</i></b>", disable_web_page_preview=True)
         try:
             results = json.loads(YoutubeSearch(qry[1], max_results=1).to_json())
