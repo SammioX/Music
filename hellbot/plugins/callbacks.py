@@ -101,9 +101,9 @@ async def cbhelpmenu(_, query: CallbackQuery):
 
 
 @Client.on_callback_query(filters.regex("cbhowtouse"))
-async def cbhowtouse(client: Client, message: Message, query: CallbackQuery):
-    await client.send_message(
-        query.chat.id,
+async def cbhowtouse(client: Client, message: Message):
+    await message.reply_text(
+        message.chat.id,
         f"""<b><i>How to use me?</b></i>
 
 <b>Step 1:</b> <i>Add me( @{BUN} ) and @{(await USER.get_me()).username} in your group or just add me and send /join for automatic joining process.</i>
