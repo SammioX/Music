@@ -87,7 +87,7 @@ async def play(_, message: Message):
             return await response.edit("<b><i>ERROR !!</b></i> \n\n<i>Unable to find relevant search queries...</i>")
         for i in results["videos"]:
             url = f"https://www.youtube.com{i['url_suffix']}"
-            duration = i['durarion']
+            duration = i['duration']
             title = i['title'][:50]
             views = i['views']
         file = await converter.convert(youtube.download(url))
