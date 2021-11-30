@@ -7,6 +7,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from youtubesearchpython import SearchVideos
 from youtube_search import YoutubeSearch
 
+from .. import arq
 from ..helper.database.db import get_collections
 from ..helper.miscs import clog
 from ..config import BOT_USERNAME as BUN, THUMB_URL
@@ -158,7 +159,7 @@ async def lyrics_func(_, message):
         await m.edit(f"__{lyrics}__")
         return
     lyrics = await paste(lyrics)
-    await m.edit(f"<b><i>Lyrics was too long. Paste it <a href='{lurics}'>here</a>.</b></i>")
+    await m.edit(f"<b><i>Lyrics was too long. Paste it <a href='{lyrics}'>here</a>.</b></i>")
 
 
 @Client.on_message(filters.command(["video", "vsong", f"video@{BUN}", f"vsong@{BUN}"]))
@@ -259,20 +260,20 @@ async def search(client, message):
             gidtitle = message.chat.title
         await GROUPS.insert_one({"id": gid, "grp": gidtitle})
         await clog("HELLBOT_MUSIC", f"Bot added to a new group\n\n{gidtitle}\nID: `{gid}`", "NEW_GROUP")
+    if len(message.command) < 2:
+        await message.reply_text("<b><i>Give something to search plis..</b></i>")
+        return
     try:
-        if len(message.command) < 2:
-            await message.reply_text("<b><i>Give something to search plis..</b></i>")
-            return
         query = message.text.split(" ", 1)[1]
         m = await message.reply_text(f"<b><i>Searching for {query}...</b></i>")
-        results = YoutubeSearch(query, max_results=5).to_dict()
-        i = 1
+        results = YoutubeSearch(query, max_results=10).to_dict()
         text = ""
-        while i <= 5:
+        i = 0
+        while i < 6:
             url = f"https://youtube.com{results[i]['url_suffix']}"
-            text += f"<b><i>#{i} Title:</b></i> <a href='{url}'>{results[i]['title']}</a>\n"
+            text += f"<b><i>#{i+1} Title:</b></i> <a href='{url}'>{results[i]['title']}</a>\n"
             text += f"<b><i>Duration:</b></i> <code>{results[i]['duration']}</code>\n"
-            text += f"<b><i>Views:</b></i> <code>{results[i]['views']}</code>\n"
+            text += f"<b><i>Views:</b></i> <code>{results[i]['views']}</code>\n\n"
             i += 1
         await m.delete()
         await message.reply_photo(THUMB_URL, text)
