@@ -51,43 +51,26 @@ async def cbback(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbstart"))
 async def cbstart(_, query: CallbackQuery):
-    await message.reply_photo(
-        photo=BOT_PIC,
-        caption=f"""
-__**Hello!! This is a voice chat music player bot. You can listen to any music using me.**__
-
-**By:** @Its_HellBot
-""",
-    reply_markup=InlineKeyboardMarkup(
+    await query.edit_message_caption(
+        caption=f"<b><i>Hello there!! \nI'm a Telegram voice chat music player by @Its_Hellbot. Enjoy my advanced features along with a simple and sexy interface</b></i>",
+        reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(
-                        "Add in group ✨",
-                        url=f"https://t.me/{BUN}?startgroup=true",
-                    )
+                    InlineKeyboardButton("Add in group 🦜", url=f"https://t.me/{BUN}?startgroup=true")
                 ],
                 [
-                    InlineKeyboardButton("How to use ❓", callback_data="cbhowtouse"),
-                    InlineKeyboardButton("Commands 📜", callback_data="cbcmds")],
-                [
-                    InlineKeyboardButton("Deployed By 💝", url=f"tg://openmessage?user_id={OWNER}"),
+                    InlineKeyboardButton("Guide 📜", callback_data="cbhowtouse"),
+                    InlineKeyboardButton("Commands 📌", callback_data="cbcmds")
                 ],
                 [
-                    InlineKeyboardButton(
-                        "Group 👥︎", url=f"https://t.me/hellbot_chat"
-                    ),
-                    InlineKeyboardButton(
-                        "Channel 📣", url=f"https://t.me/its_hellbot"
-                    ),
+                    InlineKeyboardButton("Channel 🍀", url="https://t.me/its_hellbot"),
+                    InlineKeyboardButton("Source Code", url="https://github.com/The-HellBot/Music")
                 ],
                 [
-                    InlineKeyboardButton(
-                        "Repository 💬", url="https://github.com/The-HellBot/Music"
-                    )
+                    InlineKeyboardButton("Deployed By", url=f"tg://openmessage?user_id={OWNER}")
                 ],
             ]
-        ),
-        disable_web_page_preview=True,
+        )
     )
 
 
@@ -102,8 +85,7 @@ async def cbhelpmenu(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbhowtouse"))
 async def cbhowtouse(client: Client, query: CallbackQuery):
-    await client.send_message(
-        query.id,
+    await query.edit_message_caption(
         f"""<b><i>How to use me?</b></i>
 
 <b>Step 1:</b> <i>Add me( @{BUN} ) and @{(await USER.get_me()).username} in your group or just add me and send /join for automatic joining process.</i>
@@ -114,7 +96,7 @@ async def cbhowtouse(client: Client, query: CallbackQuery):
 <b><i>By:</b></i> @Its_HellBot""",
         reply_markup=InlineKeyboardMarkup(
             [
-                InlineKeyboardButton("Menu 🔙", callback_data="cbhelpmenu"),
+                InlineKeyboardButton("Back 🔙", callback_data="cbstart"),
                 InlineKeyboardButton("Commands 📜", callback_data="cbcmds")
             ]
         )
