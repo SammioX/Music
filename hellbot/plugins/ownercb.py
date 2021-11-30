@@ -42,7 +42,7 @@ async def cbowner(_, query: CallbackQuery):
 <b>    Example:</b> <code>/unban 6969696</code>
 
 <b>3. Command:</b> <code>/banlist</code>
-<b>    Usage:</b> <code>Gets the list of all banned users.</b>
+<b>    Usage:</b> <code>Gets the list of all banned users.</code>
 <b>    Example:</b> <code>/banlist</code>
 
 <b>4. Command:</b> <code>/stats</code>
