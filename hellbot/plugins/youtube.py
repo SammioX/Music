@@ -264,7 +264,7 @@ async def search(client, message):
         await message.reply_text("<b><i>Give something to search plis..</b></i>")
         return
     query = message.text.split(" ", 1)[1]
-    m = await message.reply_text("<b><i>Searching for {query} ...</b></i>")
+    m = await message.reply_text(f"<b><i>Searching for {query} ...</b></i>")
     try:
         results = json.loads(YoutubeSearch(query, max_results=5).to_json())
     except KeyError:
@@ -273,4 +273,4 @@ async def search(client, message):
     for i in results["videos"]:
         url = f"https://www.youtube.com{i['url_suffix']}"
         output += (f"• <a href='{url}'>{i['title']}</a>\n\n")
-    await m.edit(output)
+    await m.edit(output, disable_web_page_preview=True)
