@@ -114,7 +114,7 @@ async def cbcmds(client: Client, query: CallbackQuery):
                 ],
                 [
                     InlineKeyboardButton("Downloads", callback_data="cbdwl"),
-                    InlineKeyboardButton("Extras", callback_data="cbextra")
+                    InlineKeyboardButton("Extras", callback_data="cbextras")
                 ],
                 [
                     InlineKeyboardButton("Voice Chat", callback_data="cbvc"),
@@ -197,7 +197,7 @@ async def cbdelcmds(_, query: CallbackQuery):
     )
 
 
-@Client.on_callback_query(filters.regex("cdextras"))
+@Client.on_callback_query(filters.regex("cbextras"))
 async def quotly(_, query: CallbackQuery):
     await query.edit_message_text(
         text=f"""
