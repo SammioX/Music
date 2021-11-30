@@ -22,7 +22,7 @@ OWNER_HELPCB = InlineKeyboardMarkup(
             InlineKeyboardButton("Tools 🔧", callback_data="cbownertools")
         ],
         [
-            InlineKeyboardButton("Help Menu 📜", callback_data="cbhelpmenu")
+            InlineKeyboardButton("Help Menu 📜", callback_data="cbcmd")
         ]
     ]
 )
