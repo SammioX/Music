@@ -96,8 +96,12 @@ async def cbhowtouse(client: Client, query: CallbackQuery):
 <b><i>By:</b></i> @Its_HellBot""",
         reply_markup=InlineKeyboardMarkup(
             [
-                InlineKeyboardButton("Back 🔙", callback_data="cbstart"),
-                InlineKeyboardButton("Commands 📜", callback_data="cbcmds")
+                [
+                    InlineKeyboardButton("Commands 📌", callback_data="cbcmds")
+                ],
+                [
+                    InlineKeyboardButton("Back 🔙", callback_data="cbstart")
+                ]
             ]
         )
     )
