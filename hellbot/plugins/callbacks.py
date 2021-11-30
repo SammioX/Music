@@ -86,14 +86,7 @@ async def cbhelpmenu(_, query: CallbackQuery):
 @Client.on_callback_query(filters.regex("cbhowtouse"))
 async def cbhowtouse(client: Client, query: CallbackQuery):
     await query.edit_message_caption(
-        f"""<b><i>How to use me?</b></i>
-
-<b>Step 1:</b> <i>Add me( @{BUN} ) and @{(await USER.get_me()).username} in your group or just add me and send /join for automatic joining process.</i>
-<b>Step 2:</b> <i>Promote me ( @{BUN} ) and @{(await USER.get_me()).username} with atleast Manage Voice Chat rights.</i>
-
-<i>Done! You are good to go. Now see my command menu to get details of commands I support.</i>
-
-<b><i>By:</b></i> @Its_HellBot""",
+        caption=f"<b><i>How to use me?</b></i>\n\n<b>Step 1:</b> <i>Add me( @{BUN} ) and @{(await USER.get_me()).username} in your group or just add me and send /join for automatic joining process.</i>\n<b>Step 2:</b> <i>Promote me ( @{BUN} ) and @{(await USER.get_me()).username} with atleast Manage Voice Chat rights.</i>\n\n<i>Done! You are good to go. Now see my command menu to get details of commands I support.</i>\n\n<b><i>By:</b></i> @Its_HellBot",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -101,7 +94,7 @@ async def cbhowtouse(client: Client, query: CallbackQuery):
                 ],
                 [
                     InlineKeyboardButton("Back 🔙", callback_data="cbstart")
-                ]
+                ],
             ]
         )
     )
