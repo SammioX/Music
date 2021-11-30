@@ -110,7 +110,7 @@ async def cbcmds(client: Client, query: CallbackQuery):
             [
                 [
                     InlineKeyboardButton("Admin & Sudo", callback_data="cbadmins"),
-                    InlineKeyboardButton("Owner", callback_data="cbownertools")
+                    InlineKeyboardButton("Owner", callback_data="cbowner")
                 ],
                 [
                     InlineKeyboardButton("Downloads", callback_data="cbdwl"),
@@ -119,6 +119,32 @@ async def cbcmds(client: Client, query: CallbackQuery):
                 [
                     InlineKeyboardButton("Voice Chat", callback_data="cbvc"),
                     InlineKeyboardButton("Others", callback_data="cbothers")
+                ],
+            ]
+        )
+    )
+
+
+@Client.on_callback_query(filters.regex("cbcmd"))
+async def cbcmds(client: Client, query: CallbackQuery):
+    await query.edit_message_text(
+        text=f"<b><i>📝 Below are my list of commands I currently support:</b></i>",
+        reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("Admin & Sudo", callback_data="cbadmins"),
+                    InlineKeyboardButton("Owner", callback_data="cbowner")
+                ],
+                [
+                    InlineKeyboardButton("Downloads", callback_data="cbdwl"),
+                    InlineKeyboardButton("Extras", callback_data="cbextras")
+                ],
+                [
+                    InlineKeyboardButton("Voice Chat", callback_data="cbvc"),
+                    InlineKeyboardButton("Others", callback_data="cbothers")
+                ],
+                [
+                    InlineKeyboardButton("Close", callback_data="close")
                 ],
             ]
         )
@@ -144,7 +170,7 @@ async def cbothers(_, query: CallbackQuery):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("Back 🔙", callback_data="cbcmds")
+                    InlineKeyboardButton("Back 🔙", callback_data="cbcmd")
                 ]
             ]
         )
@@ -168,9 +194,7 @@ async def cbdwl(_, query: CallbackQuery):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(
-                        "Back 🔙", callback_data="cbcmds"
-                    )
+                    InlineKeyboardButton("Back 🔙", callback_data="cbcmd")
                 ]
             ]
         )
@@ -188,9 +212,7 @@ async def cbdelcmds(_, query: CallbackQuery):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(
-                        "Menu 🔙", callback_data="cbhelpmenu"
-                    )
+                    InlineKeyboardButton("Menu 🔙", callback_data="cbhelpmenu")
                 ]
             ]
         )
@@ -217,9 +239,7 @@ async def quotly(_, query: CallbackQuery):
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(
-                        "Back 🔙", callback_data="cbcmds"
-                    )
+                    InlineKeyboardButton("Back 🔙", callback_data="cbcmd")
                 ]
             ]
         )
