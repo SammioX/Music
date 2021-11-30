@@ -271,6 +271,6 @@ async def search(client, message):
         return await m.edit("Unable to find relevant search queries...")
     output = f"<b><i><u>Search Query:</b></i></u>\n<code>{query}<code>\n\n<b><i>Results:</b></i>\n\n"
     for i in results["videos"]:
-        url = "https://www.youtube.com{i['url_suffix']}"
+        url = f"https://www.youtube.com{i['url_suffix']}"
         output += (f"• <a href='{url}'>{i['title']}</a>\n\n")
     await m.edit(output)
