@@ -1,4 +1,4 @@
-import time, os, math, asyncio, ffmpeg, requests, wget, yt_dlp
+import time, os, math, asyncio, ffmpeg, json, requests, wget, yt_dlp
 
 from urllib.parse import urlparse
 from pyrogram import Client, filters
@@ -263,19 +263,12 @@ async def search(client, message):
     if len(message.command) < 2:
         await message.reply_text("<b><i>Give something to search plis..</b></i>")
         return
+    query = message.text.split(" ", 1)[1]
     try:
-        query = message.text.split(" ", 1)[1]
-        m = await message.reply_text(f"<b><i>Searching for {query}...</b></i>")
-        results = YoutubeSearch(query, max_results=10).to_dict()
-        text = ""
-        i = 0
-        while i < 6:
-            url = f"https://youtube.com{results[i]['url_suffix']}"
-            text += f"<b><i>#{i+1} Title:</b></i> <a href='{url}'>{results[i]['title']}</a>\n"
-            text += f"<b><i>Duration:</b></i> <code>{results[i]['duration']}</code>\n"
-            text += f"<b><i>Views:</b></i> <code>{results[i]['views']}</code>\n\n"
-            i += 1
-        await m.delete()
-        await message.reply_photo(THUMB_URL, text)
-    except Exception as e:
-        await message.reply_text(f"<b><i>ERROR !!</b></i> \n\n<code>{str(e)}</code>")
+        results = json.loads(YoutubeSearch(query, max_results=7).to_json())
+    except KeyError:
+        return await eod(event, "Unable to find relevant search queries...")
+    output = f"<b><i><u>Search Query:</b></i></u>\n<code>{query}<code>\n\n<b><i>Results:</b></i>\n\n"
+    for i in results["videos"]:
+        url = https://www.youtube.com{i['url_suffix']}
+        output += (f"• <a href='{url}'>{i['title']}</a>\n\n")
