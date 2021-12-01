@@ -232,6 +232,7 @@ async def unmute(_, message: Message):
 
 
 @Client.on_callback_query(filters.regex("cbpause"))
+@authorized_users_only
 async def cbpause(_, query: CallbackQuery):
     if pycalls.pause(query.message.chat.id):
         await query.edit_message_text("⏸ Paused !!**", reply_markup=BACK_BUTTON)
@@ -239,6 +240,7 @@ async def cbpause(_, query: CallbackQuery):
         await query.edit_message_text("❗️ **Nothing is playing to pause!**", reply_markup=BACK_BUTTON)
 
 @Client.on_callback_query(filters.regex("cbresume"))
+@authorized_users_only
 async def cbresume(_, query: CallbackQuery):
     if pycalls.resume(query.message.chat.id):
         await query.edit_message_text("🎧 **Resumed !!**", reply_markup=BACK_BUTTON)
@@ -246,6 +248,7 @@ async def cbresume(_, query: CallbackQuery):
         await query.edit_message_text("❗️ **Nothing is paused to resume!**", reply_markup=BACK_BUTTON)
 
 @Client.on_callback_query(filters.regex("cbend"))
+@authorized_users_only
 async def cbend(_, query: CallbackQuery):
     if query.message.chat.id not in pycalls.active_chats:
         await query.edit_message_text("❗️**Nothing is playing to end!**", reply_markup=BACK_BUTTON)
@@ -259,6 +262,7 @@ async def cbend(_, query: CallbackQuery):
         await query.edit_message_text("✅ **Cleared queue cache and left voice chat!**", reply_markup=BACK_BUTTON)
 
 @Client.on_callback_query(filters.regex("cbskip"))
+@authorized_users_only
 async def cbskip(_, query: CallbackQuery):
      if query.message.chat.id not in pycalls.active_chats:
         await query.edit_message_text("❗️ **Nothing is playing to skip!**", reply_markup=BACK_BUTTON)
@@ -274,6 +278,7 @@ async def cbskip(_, query: CallbackQuery):
         await query.edit_message_text("⏩ **Skipped**", reply_markup=BACK_BUTTON)
 
 @Client.on_callback_query(filters.regex("cbmute"))
+@authorized_users_only
 async def cbmute(_, query: CallbackQuery):
     result = pycalls.mute(query.message.chat.id)
 
@@ -285,6 +290,7 @@ async def cbmute(_, query: CallbackQuery):
         await query.edit_message_text("❗️ **Voice chat isn't active !!**", reply_markup=BACK_BUTTON)
 
 @Client.on_callback_query(filters.regex("cbunmute"))
+@authorized_users_only
 async def cbunmute(_, query: CallbackQuery):
     result = pycalls.unmute(query.message.chat.id)
 
