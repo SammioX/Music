@@ -9,7 +9,7 @@ html-telegraph-poster
 motor
 psutil
 pyrogram
-pytgcalls
+pytgcalls[pyrogram]
 python-arq
 python-dotenv
 requests
