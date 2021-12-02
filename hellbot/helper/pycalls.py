@@ -13,7 +13,7 @@ def init_instance(chat_id: int):
     if chat_id not in instances:
         instances[chat_id] = GroupCallFactory(client)
     instance = instances[chat_id]
-    @instance.on_playout_ended
+    @instance.playout_ended
     async def ___(__, _):
         task_done(chat_id)
         if is_empty(chat_id):
