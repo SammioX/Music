@@ -1,6 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, Chat, CallbackQuery
 
+from .. import hellbot
 from ..helper.database.db import get_collections
 from ..helper.miscs import clog
 from .. import client as USER
@@ -9,47 +10,38 @@ from ..config import BOT_USERNAME as BUN, OWNER
 BOT_PIC = "https://te.legra.ph/file/2a24a198476d4abf505da.jpg"
 
 
-@Client.on_callback_query(filters.regex("close"))
+@hellbot.on_callback_query(filters.regex("close"))
 async def close(_, query: CallbackQuery):
     await query.message.delete()
 
 
-@Client.on_callback_query(filters.regex("cbback"))
+@hellbot.on_callback_query(filters.regex("cbback"))
 async def cbback(_, query: CallbackQuery):
     await query.edit_message_text(
         text="**Hêllẞø† Control Panel :**",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton(
-                        "Pause ⏸", callback_data="cbpause"
-                    ),
-                    InlineKeyboardButton(
-                        "Resume ▶️", callback_data="cbresume"
-                    )
+                    InlineKeyboardButton("Pause ⏸", callback_data="cbpause"),
+                    InlineKeyboardButton("Resume ▶️", callback_data="cbresume")
                 ],
                 [
-                    InlineKeyboardButton(
-                        "Skip ⏩", callback_data="cbskip"
-                    ),
-                    InlineKeyboardButton(
-                        "End ⏹", callback_data="cbend"
-                    )
+                    InlineKeyboardButton("Skip ⏩", callback_data="cbskip"),
+                    InlineKeyboardButton("End ⏹", callback_data="cbend")
                 ],
                 [
-                    InlineKeyboardButton(
-                        "Mute 🔇", callback_data="cbmute"
-                    ),
-                    InlineKeyboardButton(
-                        "Unmute 🔊", callback_data="cbunmute"
-                    )
+                    InlineKeyboardButton("Mute 🔇", callback_data="cbmute"),
+                    InlineKeyboardButton("Unmute 🔊", callback_data="cbunmute")
+                ],
+                [
+                    InlineKeyboardButton("Close 🗑️", callback_data="close")
                 ]
             ]
         )
     )
 
 
-@Client.on_callback_query(filters.regex("cbstart"))
+@hellbot.on_callback_query(filters.regex("cbstart"))
 async def cbstart(_, query: CallbackQuery):
     await query.edit_message_caption(
         caption=f"<b><i>Hello there!! \nI'm a Telegram voice chat music player by @Its_Hellbot. Enjoy my advanced features along with a simple and sexy interface</b></i>",
@@ -74,7 +66,7 @@ async def cbstart(_, query: CallbackQuery):
     )
 
 
-@Client.on_callback_query(filters.regex("cbhelpmenu"))
+@hellbot.on_callback_query(filters.regex("cbhelpmenu"))
 async def cbhelpmenu(_, query: CallbackQuery):
     await query.edit_message_text(
         text=f"""<b><i>Hello there {query.message.from_user.mention} 😉️!</b></i>
@@ -83,8 +75,8 @@ async def cbhelpmenu(_, query: CallbackQuery):
     )
 
 
-@Client.on_callback_query(filters.regex("cbhowtouse"))
-async def cbhowtouse(client: Client, query: CallbackQuery):
+@hellbot.on_callback_query(filters.regex("cbhowtouse"))
+async def cbhowtouse(client: hellbot, query: CallbackQuery):
     await client.send_message(
         query.message.chat.id,
         text=f"<b><i>How to use me?</b></i>\n\n<b>Step 1:</b> <i>Add me( @{BUN} ) and @{(await USER.get_me()).username} in your group or just add me and send /join for automatic joining process.</i>\n<b>Step 2:</b> <i>Promote me ( @{BUN} ) and @{(await USER.get_me()).username} with atleast Manage Voice Chat rights.</i>\n\n<i>Done! You are good to go. Now see my command menu to get details of commands I support.</i>\n\n<b><i>By:</b></i> @Its_HellBot",
@@ -101,8 +93,8 @@ async def cbhowtouse(client: Client, query: CallbackQuery):
     )
 
 
-@Client.on_callback_query(filters.regex("cbcmds"))
-async def cbcmds(client: Client, query: CallbackQuery):
+@hellbot.on_callback_query(filters.regex("cbcmds"))
+async def cbcmds(client: hellbot, query: CallbackQuery):
     await client.send_message(
         query.message.chat.id,
         text=f"<b><i>📝 Below are my list of commands I currently support:</b></i>",
@@ -125,8 +117,8 @@ async def cbcmds(client: Client, query: CallbackQuery):
     )
 
 
-@Client.on_callback_query(filters.regex("cbcmd"))
-async def cbcmds(client: Client, query: CallbackQuery):
+@hellbot.on_callback_query(filters.regex("cbcmd"))
+async def cbcmds(client: hellbot, query: CallbackQuery):
     await query.edit_message_text(
         text=f"<b><i>📝 Below are my list of commands I currently support:</b></i>",
         reply_markup=InlineKeyboardMarkup(
@@ -151,7 +143,7 @@ async def cbcmds(client: Client, query: CallbackQuery):
     )
 
 
-@Client.on_callback_query(filters.regex("cbvc"))
+@hellbot.on_callback_query(filters.regex("cbvc"))
 async def cdvc(_, query: CallbackQuery):
     await query.edit_message_text(
         text=f"""<b><i>Voice Chat Command:</b></i>
@@ -171,7 +163,7 @@ async def cdvc(_, query: CallbackQuery):
     )
 
 
-@Client.on_callback_query(filters.regex("cbadmins"))
+@hellbot.on_callback_query(filters.regex("cbadmins"))
 async def cbadmins(_, query: CallbackQuery):
     await query.edit_message_text(
         text=f"""<b></i>Admins & Sudo Commands:</b></i>
@@ -234,7 +226,7 @@ async def cbadmins(_, query: CallbackQuery):
     )
 
 
-@Client.on_callback_query(filters.regex("cbothers"))
+@hellbot.on_callback_query(filters.regex("cbothers"))
 async def cbothers(_, query: CallbackQuery):
     await query.edit_message_text(
         text=f"""
@@ -272,7 +264,7 @@ async def cbothers(_, query: CallbackQuery):
     )
 
 
-@Client.on_callback_query(filters.regex("cbdwl"))
+@hellbot.on_callback_query(filters.regex("cbdwl"))
 async def cbdwl(_, query: CallbackQuery):
     await query.edit_message_text(
         text=f"""
@@ -296,7 +288,7 @@ async def cbdwl(_, query: CallbackQuery):
     )
 
 
-@Client.on_callback_query(filters.regex("cbextras"))
+@hellbot.on_callback_query(filters.regex("cbextras"))
 async def quotly(_, query: CallbackQuery):
     await query.edit_message_text(
         text=f"""
