@@ -9,21 +9,21 @@ instances: Dict[int, GroupCallFactory] = {}
 active_chats: Dict[int, Dict[str, bool]] = {}
 
 
-async def init_instance(chat_id: int):
+def init_instance(chat_id: int):
     if chat_id not in instances:
         instances[chat_id] = GroupCallFactory(client).get_group_call()
     instance = instances[chat_id]
     @instance.on_playout_ended
     async def ___(__, _):
-        await task_done(chat_id)
+        task_done(chat_id)
         if is_empty(chat_id):
             await stop(chat_id)
         else:
             instance.input_filename = get(chat_id)["file"]
 
 
-async def get_instance(chat_id: int) -> GroupCallFactory:
-    await init_instance(chat_id)
+def get_instance(chat_id: int) -> GroupCallFactory:
+    init_instance(chat_id)
     return instances[chat_id]
 
 
