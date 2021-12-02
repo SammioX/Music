@@ -1,18 +1,18 @@
 from typing import Dict
 
-from pytgcalls import GroupCallFactory
+from pytgcalls import GroupCallFactory, GroupCall
 
 from .queue import get, is_empty, task_done
 from .. import client
 
-instances: Dict[int, GroupCallFactory] = {}
+instances: Dict[int, GroupCall] = {}
 active_chats: Dict[int, Dict[str, bool]] = {}
 
 
 def init_instance(chat_id: int):
     if chat_id not in instances:
-        instances[chat_id] = GroupCallFactory(client).get_group_call()
-    instance = instances[chat_id]
+        instances[chat_id] = GroupCallFactory(client)
+    instance = instances[chat_id].get_group_call()
     @instance.on_playout_ended
     async def ___(__, _):
         task_done(chat_id)
