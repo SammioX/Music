@@ -8,7 +8,6 @@ import asyncio
 import traceback
 from pyrogram.errors import FloodWait, InputUserDeactivated, UserIsBlocked, PeerIdInvalid
 
-from .. import hellbot, client
 from .db import db, Database, mdb_
 from hellbot.config import LOGGER_ID
 
