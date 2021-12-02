@@ -233,8 +233,6 @@ async def unmute(_, message: Message):
 
 @Client.on_callback_query(filters.regex("cbpause"))
 async def cbpause(_, query: CallbackQuery):
-    if query.from_user.id not in admins_dict[query.message.chat.id]:
-        return await query.answer("Only for Admins & Sudo Users", show_alert=True)
     if pycalls.pause(query.message.chat.id):
         await query.edit_message_text("⏸ Paused !!**", reply_markup=BACK_BUTTON)
     else:
@@ -242,8 +240,6 @@ async def cbpause(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbresume"))
 async def cbresume(_, query: CallbackQuery):
-    if query.from_user.id not in admins_dict[query.message.chat.id]:
-        return await query.answer("Only for Admins & Sudo Users", show_alert=True)
     if pycalls.resume(query.message.chat.id):
         await query.edit_message_text("🎧 **Resumed !!**", reply_markup=BACK_BUTTON)
     else:
@@ -251,8 +247,6 @@ async def cbresume(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbend"))
 async def cbend(_, query: CallbackQuery):
-    if query.from_user.id not in admins_dict[query.message.chat.id]:
-        return await query.answer("Only for Admins & Sudo Users", show_alert=True)
     if query.message.chat.id not in pycalls.active_chats:
         await query.edit_message_text("❗️**Nothing is playing to end!**", reply_markup=BACK_BUTTON)
     else:
@@ -266,8 +260,6 @@ async def cbend(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbskip"))
 async def cbskip(_, query: CallbackQuery):
-    if query.from_user.id not in admins_dict[query.message.chat.id]:
-        return await query.answer("Only for Admins & Sudo Users", show_alert=True)
     if query.message.chat.id not in pycalls.active_chats:
         await query.edit_message_text("❗️ **Nothing is playing to skip!**", reply_markup=BACK_BUTTON)
     else:
@@ -283,8 +275,6 @@ async def cbskip(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbmute"))
 async def cbmute(_, query: CallbackQuery):
-    if query.from_user.id not in admins_dict[query.message.chat.id]:
-        return await query.answer("Only for Admins & Sudo Users", show_alert=True)
     result = pycalls.mute(query.message.chat.id)
 
     if result == 0:
@@ -296,8 +286,6 @@ async def cbmute(_, query: CallbackQuery):
 
 @Client.on_callback_query(filters.regex("cbunmute"))
 async def cbunmute(_, query: CallbackQuery):
-    if query.from_user.id not in admins_dict[query.message.chat.id]:
-        return await query.answer("Only for Admins & Sudo Users", show_alert=True)
     result = pycalls.unmute(query.message.chat.id)
 
     if result == 0:
