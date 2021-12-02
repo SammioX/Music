@@ -92,7 +92,7 @@ async def play(_, message: Message):
             await response.edit("<b><i>Unable to find that song.</b></i>")
             print(str(e))
             return
-        file = await convert(wget.download(link))
+        file = await converter.convert(wget.download(link))
         is_yt = True
     else:
         await response.edit(f"<b><i>Searching “ {qry[1]} ” on Youtube...</i></b>", disable_web_page_preview=True)
