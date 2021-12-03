@@ -14,6 +14,7 @@ from ..helper.database.dbhelpers import handle_user_status, delcmd_is_on, delcmd
 from ..helper.miscs import clog
 from ..config import BOT_USERNAME as BUN, OWNER, SUDO_USERS
 from . import que, admins as admins_dict
+from .callbacks import admin_check
 
 GROUPS = get_collections("GROUPS")
 
@@ -233,27 +234,24 @@ async def unmute(_, message: Message):
 
 
 @hellbot.on_callback_query(filters.regex("cbpause"))
+@admin_check
 async def cbpause(_, query: CallbackQuery):
-    if query.message.from_user.id not in admins_dict:
-        return await query.answer("This is for admins only.", show_alert=True)
     if pycalls.pause(query.message.chat.id):
         await query.answer("⏸ Paused !!", show_alert=True)
     else:
         await query.answer("Nothing is playing", show_alert=True)
 
 @hellbot.on_callback_query(filters.regex("cbresume"))
+@admin_check
 async def cbresume(_, query: CallbackQuery):
-    if query.message.from_user.id not in admins_dict:
-        return await query.answer("This is for admins only.", show_alert=True)
     if pycalls.resume(query.message.chat.id):
         await query.answer("🎧 Resumed !!", show_alert=True)
     else:
         await query.answer("Nothing is paused!", show_alert=True)
 
 @hellbot.on_callback_query(filters.regex("cbend"))
+@admin_check
 async def cbend(_, query: CallbackQuery):
-    if query.message.from_user.id not in admins_dict:
-        return await query.answer("This is for admins only.", show_alert=True)
     if query.message.chat.id not in pycalls.active_chats:
         await query.answer("Nothing is playing!", show_alert=True)
     else:
@@ -265,9 +263,8 @@ async def cbend(_, query: CallbackQuery):
         await query.answer("Cleared queue cache and left voice chat!", show_alert=True)
 
 @hellbot.on_callback_query(filters.regex("cbskip"))
+@admin_check
 async def cbskip(_, query: CallbackQuery):
-    if query.message.from_user.id not in admins_dict:
-        return await query.answer("This is for admins only.", show_alert=True)
     if query.message.chat.id not in pycalls.active_chats:
         await query.answer("Nothing is playing!", show_alert=True)
     else:
@@ -279,9 +276,8 @@ async def cbskip(_, query: CallbackQuery):
         await query.answer("⏩ Skipped", show_alert=True)
 
 @hellbot.on_callback_query(filters.regex("cbmute"))
+@admin_check
 async def cbmute(_, query: CallbackQuery):
-    if query.message.from_user.id not in admins_dict:
-        return await query.answer("This is for admins only.", show_alert=True)
     result = pycalls.mute(query.message.chat.id)
     if result == 0:
         await query.answer("🔇 Muted !!", show_alert=True)
@@ -291,9 +287,8 @@ async def cbmute(_, query: CallbackQuery):
         await query.answer("Voice chat isn't active !!", show_alert=True)
 
 @hellbot.on_callback_query(filters.regex("cbunmute"))
+@admin_check
 async def cbunmute(_, query: CallbackQuery):
-    if query.message.from_user.id not in admins_dict:
-        return await query.answer("This is for admins only.", show_alert=True)
     result = pycalls.unmute(query.message.chat.id)
     if result == 0:
         await query.answer("🔊 Unmuted !!", show_alert=True)
