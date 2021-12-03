@@ -1,13 +1,31 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, Chat, CallbackQuery
+from functools import wraps
 
 from .. import hellbot
+from ..helper.admins import get_admins
 from ..helper.database.db import get_collections
 from ..helper.miscs import clog
 from .. import client as USER
 from ..config import BOT_USERNAME as BUN, OWNER
 
 BOT_PIC = "https://te.legra.ph/file/2a24a198476d4abf505da.jpg"
+
+
+def admin_check(func):
+    @wraps(func)
+    async def okvai(message, query):
+        admeme = await get_admins(message.chat)
+        if query.from_user.id == OWNER:
+            return await func(message, query)
+        elif query.from_user.id in SUDO_USERS:
+            return await func(message, query)
+        elif query.from_user.id in admeme:
+            return await func(message, query)
+        else:
+            await query.answer("Hmm yes? This is for owner only (⊙_◎)", show_alert=True)
+            return
+    return okvai
 
 
 @hellbot.on_callback_query(filters.regex("close"))
