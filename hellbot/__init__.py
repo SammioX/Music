@@ -1,7 +1,7 @@
 from aiohttp import ClientSession
 from pyrogram import Client
 from Python_ARQ import ARQ
-from pytgcalls import GroupCallFactory
+from pytgcalls import GroupCall
 
 from .config import API_HASH, API_ID, ARQ_API_URL, ARQ_API_KEY, BOT_TOKEN, HELLBOT_SESSION
 
