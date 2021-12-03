@@ -1,11 +1,11 @@
 from typing import Dict
 
-from pytgcalls import GroupCall
+from pytgcalls import GroupCallFactory
 
-from .queue import get, is_empty, task_done
+from ..helper import queue
 from .. import client, PyCalls
 
-instances: Dict[int, GroupCall] = {}
+instances: Dict[int, GroupCallFactory] = {}
 active_chats: Dict[int, Dict[str, bool]] = {}
 
 
@@ -15,14 +15,14 @@ def init_instance(chat_id: int):
     instance = instances[chat_id]
     @instance.on_playout_ended
     async def ___(__, _):
-        task_done(chat_id)
-        if is_empty(chat_id):
+        queue.task_done(chat_id)
+        if queue.is_empty(chat_id):
             await stop(chat_id)
         else:
-            instance.input_filename = get(chat_id)["file"]
+            instance.input_filename = queue.get(chat_id)["file"]
 
 
-def get_instance(chat_id: int) -> GroupCall:
+def get_instance(chat_id: int) -> GroupCallFactory:
     init_instance(chat_id)
     return instances[chat_id]
 
