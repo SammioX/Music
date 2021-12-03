@@ -28,4 +28,4 @@ aiosession = ClientSession()
 arq = ARQ(ARQ_API_URL, ARQ_API_KEY, aiosession)
 
 # Pytgcalls client
-PyCalls = GroupCallFactory(client).get_group_call()
+PyCalls = GroupCall(client).get_group_call()
