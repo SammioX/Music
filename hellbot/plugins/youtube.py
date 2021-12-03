@@ -263,7 +263,7 @@ async def saavn(_, message: Message):
         singer = song.result[0].singers
         duration = song.result[0].duration
         await msg.edit("Downloading")
-        audio = wget.download(slink)
+        audio = wget.download(link)
         await msg.edit("<b><i>Got the song... Uploading...</b></i>")
         await message.reply_audio(
             audio=audio,
