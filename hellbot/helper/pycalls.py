@@ -1,17 +1,17 @@
 from typing import Dict
 
-from pytgcalls import GroupCallFactory
+from pytgcalls import GroupCall
 
 from .queue import get, is_empty, task_done
-from .. import client
+from .. import client, PyCalls
 
-instances: Dict[int, GroupCallFactory] = {}
+instances: Dict[int, GroupCall] = {}
 active_chats: Dict[int, Dict[str, bool]] = {}
 
 
 def init_instance(chat_id: int):
     if chat_id not in instances:
-        instances[chat_id] = GroupCallFactory(client).get_group_call()
+        instances[chat_id] = PyCalls
     instance = instances[chat_id]
     @instance.on_playout_ended
     async def ___(__, _):
@@ -22,7 +22,7 @@ def init_instance(chat_id: int):
             instance.input_filename = get(chat_id)["file"]
 
 
-def get_instance(chat_id: int) -> GroupCallFactory:
+def get_instance(chat_id: int) -> GroupCall:
     init_instance(chat_id)
     return instances[chat_id]
 
