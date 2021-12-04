@@ -14,14 +14,14 @@ BOT_PIC = "https://te.legra.ph/file/2a24a198476d4abf505da.jpg"
 
 def admin_check(func):
     @wraps(func)
-    async def okvai(message, query):
-        admeme = await get_admins(message.chat)
+    async def okvai(client: hellbot, query: CallbackQuery):
+        admeme = await get_admins(query.message.chat)
         if query.from_user.id == OWNER:
-            return await func(message, query)
+            return await func(client: hellbot, query: CallbackQuery)
         elif query.from_user.id in SUDO_USERS:
-            return await func(message, query)
+            return await func(client: hellbot, query: CallbackQuery)
         elif query.from_user.id in admeme:
-            return await func(message, query)
+            return await func(client: hellbot, query: CallbackQuery)
         else:
             await query.answer("Hmm yes? This is for owner only (⊙_◎)", show_alert=True)
             return
