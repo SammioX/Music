@@ -81,8 +81,8 @@ async def play(_, message: Message):
         )
     elif "-s" in qry[1][-2:]:
         try:
-            await response.edit(f"<b><i>Searching “ {qry[1][:-2]} ” on Saavn...</i></b>", disable_web_page_preview=True)
-            song = await arq.saavn(qry[1][:-2])
+            await response.edit(f"<b><i>Searching “ {qry[1][:-2].strip()} ” on Saavn...</i></b>", disable_web_page_preview=True)
+            song = await arq.saavn(qry[1][:-2].strip())
             if not song.ok:
                 return await message.reply_text(song.result)
             title = song.result[0].song
