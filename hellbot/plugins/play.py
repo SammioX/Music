@@ -80,6 +80,7 @@ async def play(_, message: Message):
                 not path.isfile(path.join("downloads", file_name))
             ) else file_name
         )
+        title = "Unknown Audio File"
     elif "-s" in qry[1][-2:]:
         try:
             await response.edit(f"<b><i>Searching “ {qry[1][:-2].strip()} ” on Saavn...</i></b>", disable_web_page_preview=True)
