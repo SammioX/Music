@@ -5,6 +5,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, Voice, InlineKeyboardMarkup, InlineKeyboardButton
 from youtube_search import YoutubeSearch
 
+from . import que
 from .. import arq, hellbot, client
 from ..config import DURATION_LIMIT, BOT_USERNAME as BUN, THUMB_URL
 from ..helper import pycalls, queue, converter, youtube
@@ -108,8 +109,12 @@ async def play(_, message: Message):
             views = i['views']
         file = await converter.convert(youtube.download(url))
         is_yt = True
-    if message.chat.id in pycalls.active_chats:
-        position = await queue.put(message.chat.id, file=file)
+    if gid in pycalls.active_chats:
+        position = await queue.put(gid, file=file)
+        queue_ = que.get(gid)
+        usr_id = message.from_user.id
+        things_ = [title, usr_id, file]
+        queue_.append(things_)
         await response.delete()
         if is_yt:
             await message.reply_photo(
@@ -124,7 +129,15 @@ async def play(_, message: Message):
                 reply_markup=btns,
             )
     else:
-        await pycalls.set_stream(message.chat.id, file=file)
+        que[gid] = []
+        queue_ = que.get(gid)
+        usr_id = message.from_user.id
+        things_ = [title, usr_id, file]
+        queue_.append(things_)
+        try:
+            await pycalls.set_stream(gid, file=file)
+        except:
+            return await response.edit("<b><i>Unable to join Voice Chat !!</b></i>")
         await response.delete()
         if is_yt:
             await message.reply_photo(
