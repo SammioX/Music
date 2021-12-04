@@ -81,18 +81,19 @@ async def play(_, message: Message):
         )
     elif "-s" in qry[1][-2:]:
         try:
-            song = await arq.saavn(qry[1])
+            await response.edit(f"<b><i>Searching “ {qry[1][:-2]} ” on Saavn...</i></b>", disable_web_page_preview=True)
+            song = await arq.saavn(qry[1][:-2])
             if not song.ok:
                 return await message.reply_text(song.result)
             title = song.result[0].song
-            link = song.result[0].media_url
+            url = song.result[0].media_url
             duration = int(song.result[0].duration)
             views = "Unknown"
         except Exception as e:
             await response.edit("<b><i>Unable to find that song.</b></i>")
             print(str(e))
             return
-        file = await converter.convert(wget.download(link))
+        file = await converter.convert(wget.download(url))
         is_yt = True
     else:
         await response.edit(f"<b><i>Searching “ {qry[1]} ” on Youtube...</i></b>", disable_web_page_preview=True)
