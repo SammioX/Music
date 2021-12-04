@@ -135,10 +135,7 @@ async def play(_, message: Message):
         usr_id = message.from_user.id
         things_ = [title, usr_id, file]
         queue_.append(things_)
-        try:
-            await pycalls.set_stream(gid, file=file)
-        except:
-            return await response.edit("<b><i>Unable to join Voice Chat !!</b></i>")
+        await pycalls.set_stream(gid, file=file)
         await response.delete()
         if is_yt:
             await message.reply_photo(
