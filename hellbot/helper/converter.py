@@ -1,4 +1,4 @@
-import aiohttp, asyncio, os
+import asyncio, os, urllib.request
 
 from os import path
 from PIL import Image, ImageDraw, ImageFont
@@ -33,7 +33,8 @@ async def convert(file_path: str) -> str:
 
 
 async def thumbnail_convert(title, views, duration):
-    image1 = Image.open(THUMB_URL)
+    urllib.request.urlretrieve(THUMB_URL, "thmb.png")
+    image1 = Image.open("./thmb.png")
     image2 = image1.convert("RGBA")
     Image.alpha_composite(image2).save("temp.png")
     img = Image.open("temp.png")
@@ -44,3 +45,4 @@ async def thumbnail_convert(title, views, duration):
     draw.text((205, 630), f"Views: {views}", (255, 255, 255), font=font)
     img.save("final.png")
     os.remove("temp.png")
+    os.remove("thmb.png")
