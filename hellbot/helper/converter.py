@@ -33,13 +33,6 @@ async def convert(file_path: str) -> str:
 
 
 async def thumbnail_convert(title, views, duration):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(THUMB_URL) as resp:
-            if resp.status == 200:
-                f = await aiofiles.open("thumb.png", mode="wb")
-                await f.write(await resp.read())
-                await f.close()
-
     image1 = Image.open(THUMB_URL)
     image2 = image1.convert("RGBA")
     Image.alpha_composite(image2).save("temp.png")
@@ -51,4 +44,3 @@ async def thumbnail_convert(title, views, duration):
     draw.text((205, 630), f"Views: {views}", (255, 255, 255), font=font)
     img.save("final.png")
     os.remove("temp.png")
-    os.remove("background.png")
