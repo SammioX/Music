@@ -1,4 +1,4 @@
-import json, wget
+import json, os, wget
 
 from os import path
 from pyrogram import Client, filters
@@ -7,7 +7,7 @@ from youtube_search import YoutubeSearch
 
 from . import que
 from .. import arq, hellbot, client
-from ..config import DURATION_LIMIT, BOT_USERNAME as BUN, THUMB_URL
+from ..config import DURATION_LIMIT, BOT_USERNAME as BUN
 from ..helper import pycalls, queue, converter, youtube
 from ..helper.database.db import get_collections
 from ..helper.database.dbhelpers import handle_user_status
@@ -80,7 +80,9 @@ async def play(_, message: Message):
                 not path.isfile(path.join("downloads", file_name))
             ) else file_name
         )
-        title = "Unknown Audio File"
+        title = "Selected Audio File"
+        views = "Unknown"
+        duration = audio.duration
     elif "-s" in qry[1][-2:]:
         try:
             await response.edit(f"<b><i>Searching “ {qry[1][:-2].strip()} ” on Saavn...</i></b>", disable_web_page_preview=True)
@@ -110,6 +112,7 @@ async def play(_, message: Message):
             views = i['views']
         file = await converter.convert(youtube.download(url))
         is_yt = True
+    await converter.thumbnail_convert(title, views, duration)
     if gid in pycalls.active_chats:
         position = await queue.put(gid, file=file)
         queue_ = que.get(gid)
@@ -119,13 +122,13 @@ async def play(_, message: Message):
         await response.delete()
         if is_yt:
             await message.reply_photo(
-                photo=THUMB_URL,
+                photo="final.png",
                 caption=f"<b><i>• Song Name:</b></i> <a href='{url}'>{title}...</a> \n<b><i>• Duration:</b></i> <code>{duration}</code> \n<b><i>• Views:</b></i> <code>{views}</code> \n<b><i>• Requested By:</i></b> {user_} \n<b><i>• Status:</b></i> <code>#{position} in queue</code>",
                 reply_markup=btns,
             )
         else:
             await message.reply_photo(
-                photo=THUMB_URL,
+                photo="final.png",
                 caption=f"<b><i>Playing Selected File !!</b></i> \n<b><i>Requested By:</b></i> {user_} \n<b><i>• Status:</b></i> <code>#{position} in queue</code>",
                 reply_markup=btns,
             )
@@ -139,13 +142,14 @@ async def play(_, message: Message):
         await response.delete()
         if is_yt:
             await message.reply_photo(
-                photo=THUMB_URL,
+                photo="final.png",
                 caption=f"<b><i>• Song Name:</b></i> <a href='{url}'>{title}...</a> \n<b><i>• Duration:</b></i> <code>{duration}</code> \n<b><i>• Views:</b></i> <code>{views}</code> \n<b><i>• Requested By:</i></b> {user_} \n<b><i>• Status:</b></i> <code>Started Playing</code>",
                 reply_markup=btns,
             )
         else:
             await message.reply_photo(
-                photo=THUMB_URL,
+                photo="final.png",
                 caption=f"<b><i>Playing Selected File !!</b></i> \n<b><i>Requested By:</b></i> {user_} \n<b><i>• Status:</b></i> <code>Started Playing</code>",
                 reply_markup=btns,
             )
+    os.remove("final.png")
