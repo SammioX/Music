@@ -34,7 +34,7 @@ async def convert(file_path: str) -> str:
 
 async def thumbnail_convert(title, views, duration):
     async with aiohttp.ClientSession() as session:
-        async with session.get(thumbnail) as resp:
+        async with session.get(THUMB_URL) as resp:
             if resp.status == 200:
                 f = await aiofiles.open("thumb.png", mode="wb")
                 await f.write(await resp.read())
