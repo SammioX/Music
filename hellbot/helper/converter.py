@@ -42,7 +42,7 @@ async def thumbnail_convert(title, views, duration):
     Image.alpha_composite(image2, image5).save("temp.png")
     img = Image.open("temp.png")
     draw = ImageDraw.Draw(img)
-    font = ImageFont.truetype("./hellbot/helper/resources/Aleo-Bold.otf", 32)
+    font = ImageFont.truetype("./hellbot/helper/resources/Aleo-Bold.otf", 50)
     draw.text((205, 550), f"Title: {title}", (51, 215, 255), font=font)
     draw.text((205, 590), f"Duration: {duration}", (255, 255, 255), font=font)
     draw.text((205, 630), f"Views: {views}", (255, 255, 255), font=font)
